@@ -1,0 +1,59 @@
+name: ms5API Testing
+
+on:
+  push: #we want only the milstone5
+    branches: [Milestone-5_feature_branch]
+  pull_request:
+    branches: [Milestone-5_feature_branch]
+
+jobs:
+  api-testing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask flask_cors flasgger pylint pytest
+
+    # Run pylint 
+    - name: Run pylint
+      run: |
+        pylint ./backend/*.py
+      continue-on-error: false  # Set to true to see warnings
+
+    #docker image build
+    - name: Build API Docker Image
+      run: |
+        docker build -t api-image -f Dockerfile .
+
+    #run docker container
+    - name: Start API Container
+      run: |
+        docker run -d -p 5000:5000 --name api-container api-image
+
+    #running main.py
+    - name: Start API Service
+      run: |
+        docker exec api-container python main.py
+
+    #test_main.py
+    - name: Run test_main.py
+      run: |
+        docker exec api-container pytest test_main.py --maxfail=1 --disable-warnings
+
+    #cut the docker 
+    - name: Stop and Remove API Container
+      run: |
+        docker stop api-container
+        docker rm api-container
+
+   
