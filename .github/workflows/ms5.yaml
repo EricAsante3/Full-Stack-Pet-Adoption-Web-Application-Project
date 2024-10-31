@@ -1,0 +1,64 @@
+name: Pylint and API Testing
+
+on:
+  push:
+    branches: [Milestone-5_feature_branch]
+
+jobs:
+  test-and-lint:
+    runs-on: self-hosted  # or ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
+    steps:
+      #Checkout code
+      - uses: actions/checkout@v2  # Updated to correct version
+
+      #Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      #Install everything
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint flask flask_cors flasgger pytest
+
+      #Run pylint on all Python files
+      - name: Analyze code with pylint, excluding main.py
+        run: |
+          pylint $(git ls-files '*.py')
+
+      #Build Docker Image for API
+      - name: Build API Docker Image
+        run: |
+          docker build -t api-image -f Backend/dockerfile .
+
+
+      # Stop and Remove Existing Container (if any). this was the error
+      - name: Stop and Remove Existing API Container
+        run: |
+          docker stop api-container || true  # Stop if running, ignore if not
+          sleep 10
+          docker rm api-container || true  # Remove if exists, ignore if not
+          sleep 1
+
+      #Start API Container
+      - name: Start API Container
+        run: |
+          docker run -d -p 5000:5000 --name api-container --memory=7g api-image  # Start container on port 5000
+
+      #Run all Python tests in the directory
+      - name: Run the Python tests in directory
+        run: |
+          docker exec api-container python3 main.py  # Execute main.py
+        #docker exec api-container pytest test_main.py  # Execute test_main.py
+
+      #Stop and Remove API Container after tests
+      - name: Stop and Remove API Container
+        run: |
+          docker stop api-container  # Stop container after tests
+          docker rm api-container  # Remove container after tests
