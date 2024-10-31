@@ -48,7 +48,7 @@ jobs:
 
       - name: Build and Run Docker
         run: |
-          docker build -f dockerfile -t doc .
+          docker build -f Backend/Docker -t doc .
           docker run -d -p 5000:5000 doc
           
       # Run pytest on your pulled codebase
