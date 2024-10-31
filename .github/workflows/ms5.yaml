@@ -46,6 +46,14 @@ jobs:
           pip install pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
+      - name: Stop Docker
+        run: |
+          docker stop $(docker ps -q)
+
+      - name: Remove Docker
+        run: |
+          docker rm $(docker ps -a -q)
+
       - name: Build Docker
         run: |
           docker build -f Backend/Docker -t doc Backend/
