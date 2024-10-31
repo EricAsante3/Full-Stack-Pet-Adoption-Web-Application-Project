@@ -7,14 +7,10 @@ from UserFuc import Add_User_Faviorte, Remove_User_Faviorte, Replace_User_Locati
 
 app = Flask(__name__)
 
-
-UserAccInfo = {"Name":"eric","Location":"connecticut","Occupation":"Student"} # example user information
-
 #Get Random Pet information - For homepage
 @app.route("/Get_Random_pet", methods=["GET"])
 def get_random_pet():
     return Get_Random_Pet(), 200 # Return dog information
-
 
 # Faviortes route. add user faviorte pet to database
 @app.route("/Add_User_Faviorte", methods=["POST"])
@@ -24,7 +20,6 @@ def add_user_faviorte():
     # Api accesses database and append post json in database
     #Retrun database with succses code
     return jsonify(Add_User_Faviorte(json_data)), 200
-
 
 # Un Faviote Route. remove user faviorte pet from there database 
 @app.route("/Remove_User_Faviorte", methods=["DELETE"])
