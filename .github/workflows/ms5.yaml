@@ -7,7 +7,7 @@ on:
 
 jobs:
   do-nothing:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Do nothing
         run: echo "This is a simple CI/CD pipeline that does nothing."
