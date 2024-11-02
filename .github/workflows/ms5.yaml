@@ -10,4 +10,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Do nothing
-        run: echo "This is a simple CI/CD pipeline that does nothing."
+        run: echo "This is a simple CI/CDk pipeline that does nothing."
