@@ -46,4 +46,12 @@ jobs:
           pip install pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-  
+      - name: Build and Run Docker
+        run: |
+          docker build -f Backend/Docker -t doc .
+          docker run -d -p 5000:5000 doc
+          
+      # Run pytest on your pulled codebase
+      - name: Test with pytest
+        run: |
+          pytest
