@@ -45,7 +45,7 @@ jobs:
 
       - name: Run Api
         run: |
-          python3 Backend/main.py
+          python3 Backend/main.py &
 
 
       - name: pytest
