@@ -5,7 +5,8 @@ name: API CI/CD
 on: 
   push:
     branches:
-      - MileStone5eric
+      - main
+      - develop
 
 #Tells github actions what to execute when trigger condition is met
 jobs:
