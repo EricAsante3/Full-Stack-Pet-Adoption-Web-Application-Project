@@ -37,4 +37,3 @@ def replace_user_location(newlocation):
     newlocation = newlocation.get('Location')
     UserAccInfo["Location"] = newlocation # Set location accosiated with user to new location
     return UserAccInfo # retrun user account info
-
