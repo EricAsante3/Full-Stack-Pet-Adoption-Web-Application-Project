@@ -48,7 +48,12 @@ jobs:
           python3 Backend/main.py &
 
 
-      - name: pytest
+      - name: Run Pytest
         run: |
           pytest
+          
+      - name: Run Pylint
+        run: |
+          find ./Backend -name "*.py" | xargs pylint
+
         
