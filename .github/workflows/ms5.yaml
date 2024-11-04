@@ -37,6 +37,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
 
-      - name: RUN Api
+      - name: Install pytest
         run: |
-          python3 Backend/main.py
+          python -m pip install --upgrade pip
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
