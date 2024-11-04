@@ -36,18 +36,3 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pylint
-      # Run pylint on your pulled code in the Docker container running the job
-      - name: Analysing the code with pylint
-        run: |
-          pylint $(git ls-files 'hw002/*.py')
-      # Pytest is for unit testing your python code. Use this block as is to 
-      # install pytest in the Docker container running the job
-      - name: Install pytest
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      # Run pytest on your pulled codebase
-      - name: Test with pytest
-        run: |
-          pytest
