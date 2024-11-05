@@ -1,6 +1,6 @@
 # SQLite database
-/Backend/testData.db
-*.db
+#/Backend/testData.db
+#*.db
 
 #Log files for some reason lol
 *.log
