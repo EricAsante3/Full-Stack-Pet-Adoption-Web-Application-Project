@@ -1,22 +1,35 @@
 """
-This module provides functions for HTTP communication and 
-route functions
+This module provides backend functions to manage pet-related data.
 """
 from flask import jsonify
 
-
 def get_random_pet():
     """
-    Function to generate random ID and return pet
-    asscoieted with that ID
+    Generates a random ID and returns information associated with that ID.
+    This function simulates accessing a database to fetch pet information
+    based on a randomly generated pet ID.
+    
+    Returns:
+        dict: A dictionary containing pet data, suitable for JSON response.
+        
+    Example return:
+        {
+            "id": "9",
+            "name": "Sam",
+            "sex": "Male",
+            "Age": "8",
+            "location": "Connecticut",
+            "Breed": "Pug"
+        }
     """
-    randomint = "9" # APi generates random interger that represents a PET ID
-    # Api accesses database and return information in data base
-    #Retrun information such as profile picture on the pet accosiated with the random ID
-    data = {"id": randomint,
-            "name":"sam",
-            "sex":"male",
-            "Age":"8", 
-            "location":"Connecticwut", 
-            "Breed": "Pug"}
-    return jsonify(data) # Return dog information
+    random_int = "9"  # API generates random integer that represents a PET ID
+    data = {
+        "id": random_int,
+        "name": "Sam",
+        "sex": "Male",
+        "Age": "8",
+        "location": "Connecticut",
+        "Breed": "Pug"
+    }
+    return data  # Return pet information as a dictionary
+
