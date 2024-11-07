@@ -1,30 +1,30 @@
-# Use Python as the base image
+# For more information, please refer to https://aka.ms/vscode-docker-python
+#just so yk this dockerfile is the template docker gave me lol
+#
+
+FROM ubuntu:latest
 FROM python:3.8-slim-buster
-
-# Install pip and Python dependencies
+#install pip & python3
 RUN apt-get update && apt-get install -y python3 python3-pip
-
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
-
-# Set the working directory in the container
-WORKDIR /app
-
-
 # Install pip requirements
-COPY /requirements.txt .
+COPY requirements.txt .
+#just use python3
 RUN python3 -m pip install -r requirements.txt
 
-# Copy main application file
-COPY generateData.py .
-
-# Set the port for the application
+COPY generateData.py /generateData.py
 ENV PORT=5000
 EXPOSE 5000
 
-# Command to run the application
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
+#RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+#USER appuser
+
+# During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["python3", "generateData.py"]
