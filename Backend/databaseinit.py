@@ -4,24 +4,20 @@ import sqlite3
 from contextlib import closing
 import os
 
-
-
 def populate_test_data(db_path):
     '''THE ACTUAL FUNCITON'''
 
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-
-
+    conn.execute("PRAGMA foreign_keys = ON") 
     # Create tables
     cursor.executescript('''
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS accounts (
         user_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         age INTEGER,
-        marital_status TEXT,
-        pet_preference TEXT,
+        location TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -31,32 +27,31 @@ def populate_test_data(db_path):
         age INTEGER,
         gender TEXT CHECK(gender IN ('male', 'female')),
         breed TEXT,
-        type TEXT CHECK(type IN ('dog', 'cat')),
+        type TEXT,
         location TEXT,
         photo_path TEXT,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
-    CREATE TABLE IF NOT EXISTS user_tests (
-        test_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        question TEXT,
-        answer TEXT,
-        FOREIGN KEY (user_id) REFERENCES users(user_id)
-    );
-    ''') #ur welcome :)
 
+    CREATE TABLE IF NOT EXISTS favorites (
+        favorite_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
+        pet_id INTEGER,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    );
+
+    ''')
 
     # Insert sample users 
     cursor.executescript('''
-    INSERT INTO users (name, age, marital_status, pet_preference) VALUES 
-    ('Ben Ten', 28, 'single', 'dog'),
-    ('Spongebob Smith', 35, 'married', 'cat'),
-    ('Dipper Pines', 25, 'married', 'any'),
-    ('Emilia Kirej', 20, 'married', 'dog');
-                         
+    INSERT INTO accounts (name, age) VALUES 
+    ('Ben Ten', 28),
+    ('Spongebob Smith', 35),
+    ('Dipper Pines', 25),
+    ('Emilia Kirej', 20);
     ''')
-                         
+
     # Insert sample pets
     cursor.executescript('''
     INSERT INTO pets (name, age, gender, breed, type, location, photo_path) VALUES 
@@ -66,12 +61,15 @@ def populate_test_data(db_path):
     ('Monster', 5, 'female', 'Maine Coon', 'cat', 'Houston, TX', 'images/monster.jpg');
     ''')
 
+    # Insert sample favorites
+    cursor.executescript('''
+    INSERT INTO favorites (user_id, pet_id) VALUES
+    (2, 4),
+    (1, 2);
+    ''')
+
     conn.commit()
     conn.close()
 
-
-
-
-#populate_test_data('/home/sus98/2102/proj/cse2102-fall24-Team51/Backend/testData.db')
-
-
+if __name__ == "__main__":
+    populate_test_data('Projectdatabase.db')
