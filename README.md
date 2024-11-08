@@ -1,5 +1,5 @@
 # cse2102-fall24-Team51
-Eric Asante eoa21004
+Eric Asante eoa21004\n
 Kyle Kirejczyk kek20009
 Ishayu Ray isr21011
 Kunal bagga kub21001
