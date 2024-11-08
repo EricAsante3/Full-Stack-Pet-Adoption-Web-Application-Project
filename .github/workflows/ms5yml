@@ -1,59 +1,41 @@
-name: ms5API Testing
+name: API CI/CD
 
-on:
-  push: #we want only the milstone5
-    branches: [Milestone-5_feature_branch]
-  pull_request:
-    branches: [Milestone-5_feature_branch]
+on: 
+  push:
+    branches:
+      - Milestone6-ericfeaturebranch
 
 jobs:
-  api-testing:
-    runs-on: ubuntu-latest
+  tests:   
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        #python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8"]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
 
-    - name: Set up Python 3
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.8'
+      - name: Install pylint
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install flask flask_cors flasgger pylint pytest
+      - name: Install pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    # Run pylint 
-    - name: Run pylint
-      run: |
-        pylint ./backend/*.py
-      continue-on-error: false  # Set to true to see warnings
+      - name: Run Api
+        run: |
+          python3 Backend/app.py &
 
-    #docker image build
-    - name: Build API Docker Image
-      run: |
-        docker build -t api-image -f Dockerfile .
-
-    #run docker container
-    - name: Start API Container
-      run: |
-        docker run -d -p 5000:5000 --name api-container api-image
-
-    #running main.py
-    - name: Start API Service
-      run: |
-        docker exec api-container python main.py
-
-    #test_main.py
-    - name: Run test_main.py
-      run: |
-        docker exec api-container pytest test_main.py --maxfail=1 --disable-warnings
-
-    #cut the docker 
-    - name: Stop and Remove API Container
-      run: |
-        docker stop api-container
-        docker rm api-container
-
-   
+      - name: pytest
+        run: |
+          pytest
+        
