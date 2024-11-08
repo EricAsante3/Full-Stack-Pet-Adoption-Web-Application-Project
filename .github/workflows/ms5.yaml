@@ -46,13 +46,21 @@ jobs:
           pip install pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Api
+
+      - name: Start Database
         run: |
           python3 Backend/database_files/initdatabase.py
+          
+      - name: Run Api
+        run: |
           python3 Backend/app.py &
 
 
       - name: Run Pytest
         run: |
-          pytest
-        
+          pytest Backend/
+
+      - name: Run pylint
+        run: |
+          pylint Backend/app.py
+          
