@@ -48,6 +48,7 @@ jobs:
 
       - name: Run Api
         run: |
+          python3 Backend/database_files/initdatabase.py
           python3 Backend/app.py &
 
 
