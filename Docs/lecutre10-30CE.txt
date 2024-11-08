@@ -1,0 +1,6 @@
+JSX components needed
+
+1. Pet Box- image, name, info about pet etc.
+2. Route page- reusable image, info, detailed summary
+3. Favorite page (horizontal info)- reusable
+4. Quiz boxes- reusable format
