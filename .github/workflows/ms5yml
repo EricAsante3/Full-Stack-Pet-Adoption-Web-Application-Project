@@ -1,29 +1,43 @@
 name: API CI/CD
-
+# This is a trigger for any push to the repo, and tells github when the actions have to be run
+# Every time we do a push, the action will be executed
+# The actions should be run only when there is a push from main and develop
 on: 
   push:
     branches:
-      - Milestone6-ericfeaturebranch
+      - main
+      - develop
 
+#Tells github actions what to execute when trigger condition is met
 jobs:
-  tests:   
+  # Each job runs in parallel
+  tests:   #This is the job name
+
+    # runs-on indicates which GitHub "Runners" will run this CICD pipeline
+    # For all CSE-2102 repos, just use the following line as is
     runs-on: self-hosted
+    # This next block allows you to run this ENTIRE job on different python versions
     strategy:
       matrix:
         #python-version: ["3.7", "3.8", "3.9", "3.10", "3.11"]
         python-version: ["3.8"]
 
+    # Steps are run in sequence in this job. If one step fails, the entire job fails.
     steps:
+      # Use this next line to pull your repo into the Docker container running the job
       - uses: actions/checkout@v3
+      # This block sets up the python version
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
+      # Pylint is a static code analysis tool. Use this block as is to install pylint
+      #  in the Docker container running the job
       - name: Install pylint
         run: |
           python -m pip install --upgrade pip
           pip install pylint
+          pip install requests
 
       - name: Install pytest
         run: |
@@ -35,7 +49,6 @@ jobs:
         run: |
           python3 Backend/app.py &
 
-      - name: pytest
+      - name: Run Pytest
         run: |
           pytest
-        
