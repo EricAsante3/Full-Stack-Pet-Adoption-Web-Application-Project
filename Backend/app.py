@@ -1,20 +1,54 @@
 """
 This module provides functions for HTTP communication and 
-route functions
+route functions.
 """
 from flask import Flask, request, jsonify
+from flasgger import Swagger
 from database_files import databasefunctions
+
 app = Flask(__name__)
+Swagger(app)  # Initialize Swagger
 
 # -----------------------------------------------------------------------------------------
 
 @app.route("/add_newuser", methods=["POST"])
 def add_newuser():
     """
-    Adds new user to database
+    Adds a new user to the database.
+    ---
+    parameters:
+      - name: username
+        in: body
+        type: string
+        required: true
+      - name: password
+        in: body
+        type: string
+        required: true
+      - name: name
+        in: body
+        type: string
+        required: true
+      - name: age
+        in: body
+        type: integer
+        required: true
+      - name: location
+        in: body
+        type: string
+        required: true
+    responses:
+      200:
+        description: User added successfully with generated user ID.
+        schema:
+          type: object
+          properties:
+            user_id:
+              type: integer
+              example: 1
     """
     data = request.get_json()
-    newuser_id = databasefunctions.insert_user(data.get("username"),data.get("password"),
+    newuser_id = databasefunctions.insert_user(data.get("username"), data.get("password"),
                                                data.get("name"), data.get("age"),
                                                data.get("location"))
 
@@ -23,12 +57,51 @@ def add_newuser():
 @app.route("/add_newpet", methods=["POST"])
 def add_newpet():
     """ 
-    Adds new pet to database
+    Adds a new pet to the database.
+    ---
+    parameters:
+      - name: name
+        in: body
+        type: string
+        required: true
+      - name: age
+        in: body
+        type: integer
+        required: true
+      - name: gender
+        in: body
+        type: string
+        required: true
+      - name: breed
+        in: body
+        type: string
+        required: true
+      - name: type
+        in: body
+        type: string
+        required: true
+      - name: location
+        in: body
+        type: string
+        required: true
+      - name: photo_path
+        in: body
+        type: string
+        required: false
+    responses:
+      200:
+        description: Pet added successfully with generated pet ID.
+        schema:
+          type: object
+          properties:
+            pet_id:
+              type: integer
+              example: 101
     """
     data = request.get_json()
     newpet_id = databasefunctions.insert_pet(data.get("name"), data.get("age"),
-                data.get("gender"), data.get("breed"), data.get("type"),
-                data.get("location"), data.get("photo_path"))
+                                             data.get("gender"), data.get("breed"), data.get("type"),
+                                             data.get("location"), data.get("photo_path"))
 
     return jsonify({'pet_id': newpet_id}), 200
 
@@ -44,12 +117,31 @@ def add_newfavorite():
     ('Luna', 2, 'female', 'Siamese', 'cat', 'Chicago', 'images/luna.jpg'),
     ('Charlie', 4, 'male', 'Beagle', 'dog', 'Los Angeles', 'images/lizzie_izzie.jpg'),
     ('Daisy', 1, 'female', 'Labrador Retriever', 'dog', 'Miami', 'images/monster.jpg');
+    ---
+    parameters:
+      - name: user_id
+        in: body
+        type: integer
+        required: true
+      - name: pet_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Favorite added successfully with generated favorite ID.
+        schema:
+          type: object
+          properties:
+            favorite_id:
+              type: integer
+              example: 201
 
     """
     data = request.get_json()
     newfavorite_id = databasefunctions.insert_favorite(data.get("user_id"), data.get("pet_id"))
 
-    return jsonify({'faviorte_id': newfavorite_id}), 200
+    return jsonify({'favorite_id': newfavorite_id}), 200
 
 
 
@@ -59,6 +151,22 @@ def add_newfavorite():
 def removeuser():
     """
     Remove user from database
+    ---
+    parameters:
+      - name: user_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: User removed successfully.
+        schema:
+          type: object
+          properties:
+            row_effected:
+              type: integer
+              description: Number of rows deleted in user table.
+              example: 1
     """
     data = request.get_json()
     userid = data.get("user_id")
@@ -71,6 +179,22 @@ def removeuser():
 def removepet():
     """
     Remove pet from database
+    ---
+    parameters:
+      - name: pet_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Pet removed successfully.
+        schema:
+          type: object
+          properties:
+            row_effected:
+              type: integer
+              description: Number of rows deleted in pet table.
+              example: 1
     """
     data = request.get_json()
     petid = data.get("pet_id")
@@ -83,6 +207,26 @@ def removepet():
 def removefavorite():
     """
     Remove favorite from database
+    ---
+    parameters:
+      - name: user_id
+        in: body
+        type: integer
+        required: true
+      - name: pet_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Favorite removed successfully.
+        schema:
+          type: object
+          properties:
+            row_effected:
+              type: integer
+              description: Number of rows deleted in the favorite table.
+              example: 1
     """
     data = request.get_json()
     roweffected = databasefunctions.remove_favorite(data.get("user_id"),data.get("pet_id"))
@@ -97,6 +241,25 @@ def removefavorite():
 def fetch_userid():
     """
     fetch userid associated with username and password 
+    ---
+    parameters:
+      - name: username
+        in: body
+        type: string
+        required: true
+      - name: password
+        in: body
+        type: string
+        required: true
+    responses:
+      200:
+        description: User ID retrieved successfully.
+        schema:
+          type: object
+          properties:
+            user_id:
+              type: integer
+              example: 1
     """
     data = request.get_json()
     username = data.get("username")
@@ -115,6 +278,35 @@ def fetch_userid():
 def fetch_pet():
     """
     fetch pet from database
+    ---
+    parameters:
+      - name: pet_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Pet details retrieved successfully.
+        schema:
+          type: object
+          properties:
+            pet_details:
+              type: object
+              properties:
+                name:
+                  type: string
+                age:
+                  type: integer
+                gender:
+                  type: string
+                breed:
+                  type: string
+                type:
+                  type: string
+                location:
+                  type: string
+                photo_path:
+                  type: string
     """
     data = request.get_json()
     petid = data.get("pet_id")
@@ -127,6 +319,29 @@ def fetch_pet():
 def fetch_user():
     """
     fetch user from database
+    ---
+    parameters:
+      - name: user_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: User details retrieved successfully.
+        schema:
+          type: object
+          properties:
+            user_details:
+              type: object
+              properties:
+                name:
+                  type: string
+                age:
+                  type: integer
+                location:
+                  type: string
+                occupation:
+                  type: string
     """
     data = request.get_json()
     userid = data.get("user_id")
@@ -139,6 +354,28 @@ def fetch_user():
 def fetch_favorite_pet():
     """
     fetches all pets favorited by a user 
+    ---
+    parameters:
+      - name: user_id
+        in: body
+        type: integer
+        required: true
+    responses:
+      200:
+        description: List of favorited pets retrieved successfully.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              pet_id:
+                type: integer
+              pet_name:
+                type: string
+              pet_age:
+                type: integer
+              pet_breed:
+                type: string
     """
     data = request.get_json()
     userid = data.get("user_id")
@@ -153,6 +390,25 @@ def fetch_favorite_pet():
 def fetch_allusers():
     """
     fetches all users in database 
+    ---
+    responses:
+      200:
+        description: All users retrieved successfully.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              user_id:
+                type: integer
+              user_name:
+                type: string
+              user_age:
+                type: integer
+              user_location:
+                type: string
+              user_occupation:
+                type: string
     """
 
     allusers = databasefunctions.fetch_all_users()
@@ -162,7 +418,40 @@ def fetch_allusers():
 @app.route("/fetch_allpets", methods=["POST"])
 def fetch_allpets():
     """
-    fetches all pets in database 
+    fetches all pets in database
+    ---
+    responses:
+      200:
+        description: All pets retrieved successfully.
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              pet_id:
+                type: integer
+                example: 102
+              name:
+                type: string
+                example: "Chuck"
+              age:
+                type: integer
+                example: 3
+              gender:
+                type: string
+                example: "Female"
+              breed:
+                type: string
+                example: "Golden Retriever"
+              type:
+                type: string
+                example: "Dog"
+              location:
+                type: string
+                example: "New York"
+              photo_path:
+                type: string
+                example: "images/Chuck.jpg"
     """
 
     allpets = databasefunctions.fetch_all_pets()
