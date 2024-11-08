@@ -100,8 +100,9 @@ def add_newpet():
     """
     data = request.get_json()
     newpet_id = databasefunctions.insert_pet(data.get("name"), data.get("age"),
-                                             data.get("gender"), data.get("breed"), data.get("type"),
-                                             data.get("location"), data.get("photo_path"))
+                                             data.get("gender"), data.get("breed"), 
+                                             data.get("type"), data.get("location"), 
+                                             data.get("photo_path"))
 
     return jsonify({'pet_id': newpet_id}), 200
 
