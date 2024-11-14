@@ -5,8 +5,10 @@ route functions.
 from flask import Flask, request, jsonify
 from flasgger import Swagger
 from database_files import databasefunctions
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 Swagger(app)  # Initialize Swagger
 
 # -----------------------------------------------------------------------------------------
@@ -411,10 +413,11 @@ def fetch_allusers():
               user_occupation:
                 type: string
     """
-
-    allusers = databasefunctions.fetch_all_users()
-    return jsonify(allusers), 200
-
+    try:    
+      allusers = databasefunctions.fetch_all_users()
+      return jsonify(allusers), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/fetch_allpets", methods=["POST"])
 def fetch_allpets():
