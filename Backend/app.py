@@ -413,11 +413,10 @@ def fetch_allusers():
               user_occupation:
                 type: string
     """
-    try:    
-      allusers = databasefunctions.fetch_all_users()
-      return jsonify(allusers), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+
+    allusers = databasefunctions.fetch_all_users()
+    return jsonify(allusers), 200
+
 
 @app.route("/fetch_allpets", methods=["POST"])
 def fetch_allpets():
