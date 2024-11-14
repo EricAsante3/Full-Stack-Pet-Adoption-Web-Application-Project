@@ -1,5 +1,5 @@
 """
-This module provides functions for HTTP communication and 
+This module provides functions for HTTP communication and
 route functions.
 """
 from flask import Flask, request, jsonify
@@ -58,7 +58,7 @@ def add_newuser():
 
 @app.route("/add_newpet", methods=["POST"])
 def add_newpet():
-    """ 
+    """
     Adds a new pet to the database.
     ---
     parameters:
@@ -111,10 +111,10 @@ def add_newpet():
 
 @app.route("/add_newfavorite", methods=["POST"])
 def add_newfavorite():
-    """ 
+    """
     Adds new user favorite to database
     INSERT INTO pets (name, age, gender, breed, type, location, photo_path)
-    VALUES 
+    VALUES
     ('Bella', 3, 'female', 'Golden Retriever', 'dog', 'New York', 'images/Chuck.jpg'),
     ('Max', 5, 'male', 'Maine Coon', 'cat', 'Boston', 'images/gunner.jpg'),
     ('Luna', 2, 'female', 'Siamese', 'cat', 'Chicago', 'images/luna.jpg'),
@@ -243,7 +243,7 @@ def removefavorite():
 @app.route("/fetch_userid", methods=["POST"])
 def fetch_userid():
     """
-    fetch userid associated with username and password 
+    fetch userid associated with username and password
     ---
     parameters:
       - name: username
@@ -356,7 +356,7 @@ def fetch_user():
 @app.route("/fetch_favorited_pets", methods=["POST"])
 def fetch_favorite_pet():
     """
-    fetches all pets favorited by a user 
+    fetches all pets favorited by a user
     ---
     parameters:
       - name: user_id
@@ -392,7 +392,7 @@ def fetch_favorite_pet():
 @app.route("/fetch_allusers", methods=["POST"])
 def fetch_allusers():
     """
-    fetches all users in database 
+    fetches all users in database
     ---
     responses:
       200:
