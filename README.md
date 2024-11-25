@@ -1,7 +1,7 @@
 # Group 51 Dockerized Fullstack Pet WebApp Setup
 
 ## **Links**
-- **Group Project Video Link**: [Group 51 Kanban Board](https://youtu.be/wL0esWZsHKM)  
+- **Group Project Video Link**: [Youtube Link](https://youtu.be/wL0esWZsHKM)  
 - **Trello Board**: [Group 51 Kanban Board](https://trello.com/b/j8t0Ulvk/group-51-jira-kaban-board)  
 - **Figma Design**: [Group 51 Figma prototype](https://www.figma.com/design/mKMWW1sIOVpuQKOlapBINQ/ishayu.ray)
 
