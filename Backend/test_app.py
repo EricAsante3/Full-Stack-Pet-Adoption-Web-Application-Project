@@ -27,10 +27,10 @@ def test_insert_user():
 
 def test_insert_pet():
     """
-    Test for http://localhost:5170/add_newpet, adding new pet to database to database
+    Test for http://localhost:5000/add_newpet, adding new pet to database to database
     """
     global UNIQUE_PET_ID
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
     UNIQUE_PET_ID = requests.post((url + "/add_newpet"),
                                   json={"name": "sam", "age": 17,
                                         "gender":"Female",
@@ -44,12 +44,12 @@ def test_insert_pet():
 
 def test_insert_favorite_relation():
     """
-    Test for http://localhost:5170/add_newfavorite, adding users favorited pet into the database
+    Test for http://localhost:5000/add_newfavorite, adding users favorited pet into the database
     """
     global UNIQUE_USER_ID
     global UNIQUE_PET_ID
 
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
 
 
     requests.post((url + "/add_newfavorite"),
@@ -66,14 +66,14 @@ def test_insert_favorite_relation():
 
 def test_fetch_userid():
     """
-    Test for http://localhost:5170/fetch_userid, 
+    Test for http://localhost:5000/fetch_userid, 
     retrieve userid accosiated with username and password
     """
 
     global UNIQUE_USER_ID
     global UNIQUE_PET_ID
 
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
     userid = requests.post((url + "/fetch_userid"),
                            json={"username": "sam2213",
                                  "password": "catlover20"}, timeout=10)
@@ -84,13 +84,13 @@ def test_fetch_userid():
 
 def test_remove_favorite_relation():
     """
-    Test for http://localhost:5170/remove_favorite, remove users favorited pet from the database
+    Test for http://localhost:5000/remove_favorite, remove users favorited pet from the database
     """
 
     global UNIQUE_USER_ID
     global UNIQUE_PET_ID
 
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
 
     requests.delete((url + "/remove_favorite"),
                     json={"user_id": UNIQUE_USER_ID.json().get("user_id"),
@@ -104,13 +104,13 @@ def test_remove_favorite_relation():
 
 def test_remove_user():
     """
-    Test for http://localhost:5170/remove_user
+    Test for http://localhost:5000/remove_user
     """
 
     global UNIQUE_USER_ID
     global UNIQUE_PET_ID
 
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
 
     requests.delete((url + "/remove_user"), json=UNIQUE_USER_ID.json(), timeout=10)
 
@@ -121,10 +121,10 @@ def test_remove_user():
 
 def test_remove_pet():
     """
-    Test for http://localhost:5170/remove_pet
+    Test for http://localhost:5000/remove_pet
     """
 
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
 
     requests.delete((url + "/remove_pet"), json=UNIQUE_PET_ID.json(), timeout=10)
 
