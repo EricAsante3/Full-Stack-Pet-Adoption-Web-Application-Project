@@ -9,10 +9,10 @@ UNIQUE_PET_ID = None
 
 def test_insert_user():
     """
-    Test for http://localhost:5170/add_newuser, adding user to database
+    Test for http://localhost:5000/add_newuser, adding user to database
     """
     global UNIQUE_USER_ID
-    url = "http://localhost:5170"
+    url = "http://localhost:5000"
 
     UNIQUE_USER_ID = requests.post((url + "/add_newuser"),
                                    json={"username":"sam2213",
