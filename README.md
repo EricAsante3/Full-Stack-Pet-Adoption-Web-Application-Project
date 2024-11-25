@@ -8,7 +8,7 @@
 
 ## **Steps to Run Dockerized WebApp**
 
-**Note**: Ensure you are in the `/cse2102-fall24-Team51/` directory while running these commands.
+**Note**: Ensure you are in the `../cse2102-fall24-Team51/` directory while running these commands.
 
 ### **Backend Setup**:
 
