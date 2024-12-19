@@ -6,6 +6,8 @@
 - **Figma Design**: [Figma prototype](https://www.figma.com/design/mKMWW1sIOVpuQKOlapBINQ/ishayu.ray)
 
 ---
+![Frontend Snapshot](Frontend/Snapshots/Frontend.png "Frontend Preview")
+---
 
 ## **Steps to Run Dockerized WebApp**
 
