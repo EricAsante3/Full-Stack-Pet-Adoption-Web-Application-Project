@@ -1,11 +1,5 @@
-# Dockerized Full Stack Pet Adoption Web Application Setup
+# Dockerized Full-Stack Pet Adoption Web Application
 
-## **Links**
-- **Project Video Link**: [Youtube Link](https://youtu.be/wL0esWZsHKM)  
-- **Trello Board**: [Kanban Board](https://trello.com/b/j8t0Ulvk/group-51-jira-kaban-board)  
-- **Figma Design**: [Figma prototype](https://www.figma.com/design/mKMWW1sIOVpuQKOlapBINQ/ishayu.ray)
-
----
 ![Frontend Snapshot](Frontend/Snapshots/Frontend.png "Frontend Preview")
 ---
 
@@ -32,3 +26,27 @@
    docker run -d -p 5173:5173 team51-frontend
    
 5.  **The WebApp should now be visable at "http://localhost:5173/"**:
+
+---
+## **Technologies and Tools Used**
+- **Python**
+- **JavaScript**
+- **TypeScript**
+- **Flask**
+- **SQL**
+- **Node.js**
+- **React.js**
+- **REST API**
+- **AWS**
+- **Git**
+- **Docker**
+- **YAML**
+- **Unit Testing Frameworks**
+
+---
+
+## **Links**
+- **Project Video Link**: [Youtube Link](https://youtu.be/wL0esWZsHKM)  
+- **Kanban Board**: [Kanban Board](https://trello.com/b/j8t0Ulvk/group-51-jira-kaban-board)  
+- **Prototype Design**: [Prototype Design](https://www.figma.com/design/mKMWW1sIOVpuQKOlapBINQ/ishayu.ray)
+
