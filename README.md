@@ -34,6 +34,8 @@
 - **TypeScript**
 - **Flask**
 - **SQL**
+- **HTML**
+- **CSS**
 - **Node.js**
 - **React.js**
 - **REST API**
